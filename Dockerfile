@@ -3,6 +3,7 @@ FROM python:3.11
 WORKDIR /
 COPY requirements.txt /
 COPY src/ /
+COPY .env /
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
