@@ -2,9 +2,9 @@ name: Build and deploy a container to an Azure Web App in DEV
 
 on:
     pull_request:
-        types: [opened, synchronize, reopened, close]
+        types: [opened, synchronize, reopened]
         branches: [ "dev" ]
-  workflow_dispatch:
+    workflow_dispatch:
 
 permissions:
   contents: read
