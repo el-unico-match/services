@@ -1,7 +1,4 @@
 from typing import Any
-
-from bson import ObjectId
-
 from configs.EnvSettingsLoader import SettingsLoader
 from pymongo import MongoClient
 
