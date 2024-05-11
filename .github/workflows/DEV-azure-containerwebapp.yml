@@ -29,12 +29,12 @@ jobs:
 
       - name: Create Environment File
         run: |
-          echo "PORT=${{ vars.PORT }}" > .env    
-          echo "HOST=${{ vars.HOST }}" >> .env
-          echo "LOG_FILEPATH=${{ vars.LOG_FILEPATH }}" >> .env
+          echo "LOG_FILEPATH=${{ vars.LOG_FILEPATH }}" > .env
           echo "LOG_LEVEL=${{ vars.LOG_LEVEL }}" >> .env
           echo "APP_SITE=${{ vars.APP_SITE }}" >> .env
           echo "APP_VERSION=${{ github.sha }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_PORT=${{ vars.DB_PORT }}" >> .env
 
       - name: List directory contents
         run: ls -al
