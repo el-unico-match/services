@@ -1,5 +1,6 @@
 fastapi
 pydantic
 pydantic_settings
+pymongo
 pytz
 uvicorn
