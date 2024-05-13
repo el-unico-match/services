@@ -1,13 +1,11 @@
-from configs.EnvSettingsLoader import SettingsLoader
+from configs.EnvSettingsLoader import settings
 from repository.servicesMetadata import ApiServicesTypes
-
-Settings=SettingsLoader()
 
 async def status():
     return { 
         "name": "",
         "type": ApiServicesTypes.SERVICES.value,
-        "site": Settings.APP_SITE,
-        "version": Settings.APP_VERSION,
-        "startupTime": Settings.INIT_TIME,
+        "site": settings.APP_SITE,
+        "version": settings.APP_VERSION,
+        "startupTime": settings.INIT_TIME,
     }

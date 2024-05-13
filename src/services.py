@@ -3,6 +3,10 @@ from middlewares.RequestLogger import RequestLoggerMiddleware
 from middlewares.DatabaseExceptionHandlerMiddleware import DatabaseExceptionHandlerMiddleware
 from routers import selfServiceRouter
 from routers import externalServiceRouter
+from configs.EnvSettingsLoader import settings
+import logging
+
+logging.info(f"Starting application at {settings.INIT_TIME}")
 
 app = FastAPI()
 

@@ -14,4 +14,6 @@ class SettingsLoader(BaseSettings):
     DB_HOST:str
     DB_PORT:int
 
-    model_config = SettingsConfigDict(env_file=('../dev.env','.env'))	
+    model_config = SettingsConfigDict(env_file=('../dev.env','.env'))
+
+settings = SettingsLoader()

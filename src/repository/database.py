@@ -1,10 +1,8 @@
 from typing import Any
-from configs.EnvSettingsLoader import SettingsLoader
+from configs.EnvSettingsLoader import settings
 from pymongo import MongoClient
 
 from exceptions.NotFoundException import NotFoundException
-
-settings=SettingsLoader()	
 
 mongoClient = MongoClient(host=settings.DB_HOST,port=settings.DB_PORT)
 print(mongoClient.host)
