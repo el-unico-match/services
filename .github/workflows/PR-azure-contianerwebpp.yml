@@ -49,3 +49,5 @@ jobs:
           push: false
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           file: ./Dockerfile
+          context: .
+
