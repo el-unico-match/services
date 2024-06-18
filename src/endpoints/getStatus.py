@@ -1,4 +1,4 @@
-from configs.EnvSettingsLoader import settings
+from configs.settings import settings
 from repository.servicesMetadata import ApiServicesTypes
 
 async def status():

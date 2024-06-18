@@ -1,10 +1,10 @@
 from typing import Any
-from configs.EnvSettingsLoader import settings
+from configs.settings import settings
 from pymongo import MongoClient
 
 from exceptions.NotFoundException import NotFoundException
 
-mongoClient = MongoClient(host=settings.DB_HOST,port=settings.DB_PORT)
+mongoClient = MongoClient(settings.database_url)
 print(mongoClient.host)
 
 async def persistItem(collectionName: str, item: Any) -> Any: 
