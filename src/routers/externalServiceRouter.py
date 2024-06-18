@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 from repository.servicesMetadata import ApiService
 
-from endpoints.postService import PostServiceRequest, postService
+from endpoints.postService import PostServiceRequest, PostServiceResponse, postService
 from endpoints.putService import putServiceRequest, putService
 from endpoints.getService import getService
 from endpoints.deleteService import deleteService
@@ -30,12 +30,12 @@ async def types():
     return await getAvailabilities()
 
 @router.post(
-    path="/service",
+    path="/services",
     summary="Registers a new service.",
-    tags=["service"],
+    tags=["services"],
     status_code=status.HTTP_201_CREATED,
     )
-async def post(request: PostServiceRequest) -> ApiService:
+async def post(request: PostServiceRequest) -> PostServiceResponse:
     """
     - **type**: type of service
     - **baseUrl**: url where the service is available
@@ -45,9 +45,9 @@ async def post(request: PostServiceRequest) -> ApiService:
     return await postService(request)
 
 @router.put(
-    path="/service/{id}",
+    path="/services/{id}",
     summary="Updates an existing service.",
-    tags=["service"],
+    tags=["services"],
     status_code=status.HTTP_200_OK,
     )
 async def put(id: str, request: putServiceRequest) -> ApiService:
@@ -64,9 +64,9 @@ async def put(id: str, request: putServiceRequest) -> ApiService:
     return await putService(id, request)
 
 @router.get(
-    path="/service/{id}",
+    path="/services/{id}",
     summary="Fetch an existing service.",
-    tags=["service"],
+    tags=["services"],
     status_code=status.HTTP_200_OK,
     )
 async def get(id: str) -> ApiService:
@@ -76,9 +76,9 @@ async def get(id: str) -> ApiService:
     return await getService(id)
 
 @router.delete(
-    path="/service/{id}",
+    path="/services/{id}",
     summary="Deletes an existing service.",
-    tags=["service"],
+    tags=["services"],
     status_code=status.HTTP_200_OK,
     )
 async def delete(id: str):
