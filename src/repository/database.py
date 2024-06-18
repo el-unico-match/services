@@ -4,7 +4,7 @@ from pymongo import MongoClient
 
 from exceptions.NotFoundException import NotFoundException
 
-mongoClient = MongoClient(settings.database_url)
+mongoClient = MongoClient(settings.db_url)
 print(mongoClient.host)
 
 async def persistItem(collectionName: str, item: Any) -> Any: 

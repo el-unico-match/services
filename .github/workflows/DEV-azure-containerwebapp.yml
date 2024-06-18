@@ -33,8 +33,10 @@ jobs:
           echo "LOG_LEVEL=${{ vars.LOG_LEVEL }}" >> .env
           echo "APP_SITE=${{ vars.APP_SITE }}" >> .env
           echo "APP_VERSION=${{ github.sha }}" >> .env
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-          echo "DB_PORT=${{ vars.DB_PORT }}" >> .env
+          echo "jwt_private_key=${{ secrets.JWT_PRIVATE_KEY }}" >> .env
+          echo "jwt_public_key=${{ vars.JWT_PUBLIC_KEY }}" >> .env
+          echo "jwt_algorithm=${{ vars.JWT_ALGORITHM }}" >> .env
+          echo "db_url=${{ secrets.DB_URL }}" >> .env
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0

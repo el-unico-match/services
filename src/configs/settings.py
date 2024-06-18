@@ -21,12 +21,12 @@ class SettingsLoader(BaseSettings):
     db_port:int=5003
     db_name:str='dbname'
     
-    database_url:str=''
+    db_url:str=''
     model_config = SettingsConfigDict(env_file=('../dev.env','.env'))
 
 def loadSettings():
      settings=SettingsLoader()
-     settings.database_url=f"{settings.db_schema}://{settings.db_credentials}@{settings.db_domain}:{settings.db_port}/{settings.db_name}"
+     settings.db_url=f"{settings.db_schema}://{settings.db_credentials}@{settings.db_domain}:{settings.db_port}/{settings.db_name}"
      return settings
 
 settings=loadSettings()
