@@ -44,6 +44,7 @@ class RequestLoggerMiddleware(BaseHTTPMiddleware):
 
         except Exception as e:
             exceptionJson = jsonable_encoder(e)
+            print(exceptionJson)
             logger.error(exceptionJson)
 
             return Response(content='Internal Server Error', status_code=500)

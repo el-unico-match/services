@@ -1,6 +1,6 @@
 
 from typing import Any
-from repository.serviceRepository import ServiceRepository
+from repository.database import DatatabaseClient
 
-async def getServices() -> Any:
-    return await ServiceRepository.listItems()
+async def getServices(databaseClient: DatatabaseClient) -> Any:
+    return await databaseClient.listItems()

@@ -1,6 +1,6 @@
 
 from repository.servicesMetadata import ApiService
-from repository.serviceRepository import ServiceRepository
+from repository.database import DatatabaseClient
 
-async def getService(id: str) -> ApiService:
-    return await ServiceRepository.retrieveItem(id)
+async def getService(id: str, databaseClient: DatatabaseClient) -> ApiService:
+    return await databaseClient.retrieveItem(id)
