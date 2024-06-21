@@ -1,7 +1,7 @@
 from pydantic import Field, BaseModel
 from typing import Optional
 from repository.servicesMetadata import ApiService, ApiServicesStatus, ApiServicesTypes
-from repository.serviceRepository import ServiceRepository
+from repository.database import DatatabaseClient
 
 class putServiceRequest(BaseModel):
    id: str = Field()
@@ -11,9 +11,9 @@ class putServiceRequest(BaseModel):
    version: Optional[str] = Field()
    availability: ApiServicesStatus = Field()
 
-async def putService(id: str, request: putServiceRequest) -> ApiService: 
+async def putService(id: str, request: putServiceRequest, databaseClient: DatatabaseClient) -> ApiService: 
    
-   result = await ServiceRepository.retrieveItem(id)
+   result = await databaseClient.retrieveItem(id)
    result['type']=request.type
    result['key']=request.key
    result['baseUrl']=request.baseUrl
@@ -21,7 +21,7 @@ async def putService(id: str, request: putServiceRequest) -> ApiService:
    result['availability']=request.availability
 
    apiService = ApiService(**result)
-   await ServiceRepository.updateItem(apiService)
+   await databaseClient.updateItem(apiService)
    
    return apiService
     

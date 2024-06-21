@@ -27,7 +27,7 @@ class SettingsLoader(BaseSettings):
 def loadSettings():
     settings=SettingsLoader()
 
-    if (settings.db_url != ''):
+    if (settings.db_url == ''):
         settings.db_url=f"{settings.db_schema}://{settings.db_credentials}@{settings.db_domain}:{settings.db_port}/{settings.db_name}"
 
     return settings

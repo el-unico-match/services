@@ -1,6 +1,5 @@
 
-from repository.servicesMetadata import ApiService
-from repository.serviceRepository import ServiceRepository
+from repository.database import DatatabaseClient
 
-async def deleteService(id: str) -> str:
-    return await ServiceRepository.deleteItem(id)
+async def deleteService(id: str, databaseClient: DatatabaseClient) -> str:
+    return await databaseClient.deleteItem(id)

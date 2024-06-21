@@ -3,9 +3,9 @@ from typing import Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field
 from repository.servicesMetadata import ApiService, ApiServicesStatus, ApiServicesTypes
-from repository.serviceRepository import ServiceRepository
 from dataclasses import dataclass
 from common.JwtHelper import createToken
+from repository.database import DatatabaseClient
 
 @dataclass
 class PostServiceRequest(BaseModel):
@@ -25,7 +25,7 @@ class PostServiceResponse():
    created: datetime
    availability: str
 
-async def postService(request: PostServiceRequest) -> PostServiceResponse: 
+async def postService(request: PostServiceRequest, databaseClient: DatatabaseClient) -> PostServiceResponse: 
 
    token=createToken(request.baseUrl, request.type.value)
 
@@ -38,7 +38,7 @@ async def postService(request: PostServiceRequest) -> PostServiceResponse:
    data["key"]=jwtParts[1][:6]
 
    apiService=ApiService(**data)
-   await ServiceRepository.persistItem(apiService)
+   await databaseClient.persistItem(apiService)
    
    response=PostServiceResponse(
       id=apiService.id,

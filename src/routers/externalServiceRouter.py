@@ -1,5 +1,6 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 from repository.servicesMetadata import ApiService
+from repository.database import DatatabaseClient
 
 from endpoints.postService import PostServiceRequest, PostServiceResponse, postService
 from endpoints.putService import putServiceRequest, putService
@@ -35,14 +36,14 @@ async def types():
     tags=["services"],
     status_code=status.HTTP_201_CREATED,
     )
-async def post(request: PostServiceRequest) -> PostServiceResponse:
+async def post(request: PostServiceRequest, databaseClient = Depends(DatatabaseClient.get_services_instance)) -> PostServiceResponse:
     """
     - **type**: type of service
     - **baseUrl**: url where the service is available
     - **version**: hash from the last commit from the service
     - **availability**: describes wether the key should be operational or not
     """
-    return await postService(request)
+    return await postService(request, databaseClient)
 
 @router.put(
     path="/services/{id}",
@@ -50,7 +51,7 @@ async def post(request: PostServiceRequest) -> PostServiceResponse:
     tags=["services"],
     status_code=status.HTTP_200_OK,
     )
-async def put(id: str, request: putServiceRequest) -> ApiService:
+async def put(id: str, request: putServiceRequest, databaseClient = Depends(DatatabaseClient.get_services_instance)) -> ApiService:
     """
     - **type**: type of service
     - // **key**: key assigned to service
@@ -61,7 +62,7 @@ async def put(id: str, request: putServiceRequest) -> ApiService:
     - **created**: date when it started operating
     - **availability**: describes wether the key should be operational or not
     """
-    return await putService(id, request)
+    return await putService(id, request, databaseClient)
 
 @router.get(
     path="/services/{id}",
@@ -69,11 +70,11 @@ async def put(id: str, request: putServiceRequest) -> ApiService:
     tags=["services"],
     status_code=status.HTTP_200_OK,
     )
-async def get(id: str) -> ApiService:
+async def get(id: str, databaseClient = Depends(DatatabaseClient.get_services_instance)) -> ApiService:
     """
     - **id**: id of an existent service
     """
-    return await getService(id)
+    return await getService(id, databaseClient)
 
 @router.delete(
     path="/services/{id}",
@@ -81,16 +82,16 @@ async def get(id: str) -> ApiService:
     tags=["services"],
     status_code=status.HTTP_200_OK,
     )
-async def delete(id: str):
+async def delete(id: str, databaseClient = Depends(DatatabaseClient.get_services_instance)):
     """
     - **id**: id from deleted service
     """
-    return await deleteService(id)
+    return await deleteService(id, databaseClient)
 
 @router.get(
     path="/services/", 
     summary="Returns a list of services.", 
     tags=["services"], 
     status_code=status.HTTP_200_OK)
-async def list():
-    return await getServices()
+async def list(databaseClient = Depends(DatatabaseClient.get_services_instance)):
+    return await getServices(databaseClient)
