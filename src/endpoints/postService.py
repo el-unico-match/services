@@ -12,7 +12,6 @@ class PostServiceRequest(BaseModel):
    type: ApiServicesTypes = Field()
    baseUrl: str = Field()
    version: Optional[str] = Field()
-   availability: ApiServicesStatus = Field()
 
 @dataclass
 class PostServiceResponse():
@@ -32,10 +31,10 @@ async def postService(request: PostServiceRequest, databaseClient: DatatabaseCli
    jwtParts=token.split('.')
 
    data=request.model_dump()   
-   data["key"]="key"
-   data["created"]=datetime.now()
    data["id"]=str(ObjectId())
+   data["created"]=datetime.now()
    data["key"]=jwtParts[1][:6]
+   data["availability"]=ApiServicesStatus.DISABLED
 
    apiService=ApiService(**data)
    await databaseClient.persistItem(apiService)

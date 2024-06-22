@@ -1,6 +1,8 @@
-from fastapi import APIRouter, status, Depends
+from typing import Annotated, Optional
+from fastapi import APIRouter, status, Depends, Request, Header
 from repository.servicesMetadata import ApiService
 from repository.database import DatatabaseClient
+from exceptions.ValidationException import ValidationException
 
 from endpoints.postService import PostServiceRequest, PostServiceResponse, postService
 from endpoints.putService import putServiceRequest, putService
@@ -9,6 +11,7 @@ from endpoints.deleteService import deleteService
 from endpoints.getServices import getServices
 from endpoints.getTypes import getTypes
 from endpoints.getAvailabilities import getAvailabilities
+from endpoints.patchService import PatchServiceRequest, PatchServiceResponse, patchService
 
 router=APIRouter()
 
@@ -34,14 +37,13 @@ async def types():
     path="/services",
     summary="Registers a new service.",
     tags=["services"],
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_200_OK,
     )
 async def post(request: PostServiceRequest, databaseClient = Depends(DatatabaseClient.get_services_instance)) -> PostServiceResponse:
     """
     - **type**: type of service
     - **baseUrl**: url where the service is available
     - **version**: hash from the last commit from the service
-    - **availability**: describes wether the key should be operational or not
     """
     return await postService(request, databaseClient)
 
@@ -63,6 +65,25 @@ async def put(id: str, request: putServiceRequest, databaseClient = Depends(Data
     - **availability**: describes wether the key should be operational or not
     """
     return await putService(id, request, databaseClient)
+
+@router.patch(
+    path="/services/{id}",
+    summary="Updates an existing service availability.",
+    tags=["services"],
+    status_code=status.HTTP_200_OK,
+)
+async def patch(id: str, request: Request, patchRequest: PatchServiceRequest , x_apiKey: Annotated[str | None, Header()] = None, x_token: Annotated[str | None , Header()] = None, databaseClient = Depends(DatatabaseClient.get_services_instance)) -> PatchServiceResponse:
+    """
+    - **apiKey**: key assigned to service
+    - **baseUrl**: url where the service is available
+    - **availability**: describes wether the key should be operational or not
+    """
+    baseUrl=f"{request.base_url.scheme}://{request.base_url.netloc}"
+
+    if ( x_apiKey == None and x_token == None ):
+        raise ValidationException('x_apiKey or x_token should is required')
+
+    return await patchService(id, x_apiKey, x_token, baseUrl, patchRequest, databaseClient)
 
 @router.get(
     path="/services/{id}",

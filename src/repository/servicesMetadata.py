@@ -10,8 +10,9 @@ class ApiServicesTypes(str, Enum):
     MATCH = 'match',
 
 class ApiServicesStatus(str, Enum):
-    ENABLED = 'enabled',
-    BLOCKED = 'blocked',
+    ENABLED  = 'enabled',
+    DISABLED = 'disabled',
+    BLOCKED  = 'blocked',
 
 @dataclass
 class ApiService():
