@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field
-from repository.servicesMetadata import ApiService, ApiServicesTypes, ApiServicesStatus
+from repository.servicesMetadata import ApiService, ApiServicesStatus, ApiServicesTypes
 from dataclasses import dataclass
 from common.JwtHelper import createToken
 from repository.database import DatatabaseClient
