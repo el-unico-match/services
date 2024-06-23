@@ -17,12 +17,25 @@ class DatatabaseClient:
     self.client.close()
 
   @staticmethod
+  def init():
+    client=DatatabaseClient('services')
+    client.createUniqueIndex('baseUrl')
+    client.close()
+
+  @staticmethod
   def get_services_instance():
       databaseClient = DatatabaseClient('services')
       try:
           yield databaseClient
       finally:
           databaseClient.close()
+
+  def createUniqueIndex(self, columnName):
+    self.database.create_index(
+      keys=columnName,
+      unique=True,
+      background=True,
+    )
 
   def testConnection(self) -> bool:
      self.database.command('ping')
@@ -38,6 +51,26 @@ class DatatabaseClient:
 
   async def retrieveItem(self,id: str) -> Any: 
     result=self.database.find_one(filter={'id': id})
+
+    if ( result == None):
+      raise NotFoundException('No se encontró el elemento')
+
+    del result['_id']
+
+    return result
+
+  async def filterItems(self, filter: any) -> Any: 
+    result=self.database.filter(filter=filter)
+
+    if ( result == None):
+      raise NotFoundException('No se encontró el elemento')
+
+    del result['_id']
+
+    return result
+
+  async def filterItem(self, filter: any) -> Any: 
+    result=self.database.find_one(filter=filter)
 
     if ( result == None):
       raise NotFoundException('No se encontró el elemento')

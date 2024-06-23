@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field
@@ -22,6 +22,7 @@ class PostServiceResponse():
    baseUrl: str
    version: str
    created: datetime
+   updated: datetime
    availability: str
 
 async def postService(request: PostServiceRequest, databaseClient: DatatabaseClient) -> PostServiceResponse: 
@@ -29,10 +30,12 @@ async def postService(request: PostServiceRequest, databaseClient: DatatabaseCli
    token=createToken(request.baseUrl, request.type.value)
 
    jwtParts=token.split('.')
+   now=datetime.now(timezone.utc)
 
    data=request.model_dump()   
    data["id"]=str(ObjectId())
-   data["created"]=datetime.now()
+   data["created"]=now
+   data["updated"]=now
    data["key"]=jwtParts[1][:6]
    data["availability"]=ApiServicesStatus.DISABLED
 
@@ -47,6 +50,7 @@ async def postService(request: PostServiceRequest, databaseClient: DatatabaseCli
       baseUrl=apiService.baseUrl,
       version=apiService.version,
       created=apiService.created,
+      updated=apiService.updated,
       availability=apiService.availability.value,
    )
    

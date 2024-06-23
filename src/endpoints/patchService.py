@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from pydantic import BaseModel, Field
 from repository.servicesMetadata import ApiService, ApiServicesStatus
 from dataclasses import dataclass
@@ -19,6 +19,7 @@ class PatchServiceResponse():
    baseUrl: str
    version: str
    created: datetime
+   updated: datetime
    availability: str
 
 def extractKey(apiKey: str) -> str:
@@ -45,6 +46,7 @@ async def patchService(id: str, apiKey: str | None, userToken: str | None, baseU
    
    apiService=ApiService(**data)
    apiService.availability = request.availability
+   apiService.updated=datetime.now(timezone.utc)
    await databaseClient.updateItem(apiService)
 
    response = PatchServiceResponse(
@@ -55,6 +57,7 @@ async def patchService(id: str, apiKey: str | None, userToken: str | None, baseU
       baseUrl= apiService.baseUrl,
       version= apiService.version,
       created=apiService.created,
+      updated=apiService.updated,
       availability=apiService.availability,
    )
 
