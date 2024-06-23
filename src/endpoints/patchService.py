@@ -15,7 +15,7 @@ class PatchServiceResponse():
    id: str
    type: str
    key: str
-   token: str
+   apiKey: str
    baseUrl: str
    version: str
    created: datetime
@@ -53,7 +53,7 @@ async def patchService(id: str, apiKey: str | None, userToken: str | None, baseU
       id = apiService.id,
       type = apiService.type,
       key = apiService.key,
-      token = apiKey,
+      apiKey = apiKey,
       baseUrl= apiService.baseUrl,
       version= apiService.version,
       created=apiService.created,
