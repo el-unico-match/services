@@ -18,7 +18,7 @@ class PostServiceResponse():
    id: str
    type: str
    key: str
-   token: str
+   apiKey: str
    baseUrl: str
    version: str
    created: datetime
@@ -27,15 +27,18 @@ class PostServiceResponse():
 
 async def postService(request: PostServiceRequest, databaseClient: DatatabaseClient) -> PostServiceResponse: 
 
-   token=createToken(request.baseUrl, request.type.value)
+   id=str(ObjectId())
 
-   jwtParts=token.split('.')
+   apiKey=createToken(id, request.baseUrl, request.type.value)
+
+   jwtParts=apiKey.split('.')
    now=datetime.now(timezone.utc)
 
    data=request.model_dump()   
-   data["id"]=str(ObjectId())
+   data["id"]=id
    data["created"]=now
    data["updated"]=now
+   data["apiKey"]=apiKey
    data["key"]=jwtParts[1][:6]
    data["availability"]=ApiServicesStatus.DISABLED
 
@@ -46,7 +49,7 @@ async def postService(request: PostServiceRequest, databaseClient: DatatabaseCli
       id=apiService.id,
       type=apiService.type.value,
       key=apiService.key,
-      token=token,
+      apiKey=apiKey,
       baseUrl=apiService.baseUrl,
       version=apiService.version,
       created=apiService.created,
