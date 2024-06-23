@@ -1,11 +1,14 @@
+import logging
+from configs.settings import settings
+logging.basicConfig(filename=settings.LOG_FILEPATH, level=settings.LOG_LEVEL, format='%(asctime)s - %(message)s')
+
 from fastapi import FastAPI
 from middlewares.RequestLogger import RequestLoggerMiddleware
 from middlewares.DatabaseExceptionHandlerMiddleware import DatabaseExceptionHandlerMiddleware
 from routers import selfServiceRouter
 from routers import externalServiceRouter
-from configs.settings import settings
 from repository.database import DatatabaseClient
-import logging
+
 
 logging.info(f"Starting application at {settings.INIT_TIME}")
 
