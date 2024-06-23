@@ -38,7 +38,7 @@ async def patchService(id: str, apiKey: str | None, userToken: str | None, baseU
 
       # token should be validated here, only filtering by admin users
 
-      if ( data['key'] != key or (userToken != None  or (baseUrl != None and data['baseUrl'] != baseUrl)) ):
+      if ( data['key'] != key): # or (userToken != None  or (baseUrl != None and data['baseUrl'] != baseUrl)) ):
          raise ForbiddenException('Invalid ApiKey, token or baseUrl')  
 
    except:
