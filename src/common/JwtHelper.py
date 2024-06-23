@@ -2,8 +2,9 @@ import jwt
 from datetime import datetime, timedelta, timezone
 from configs.settings import settings
 
-def createToken(baseUrl: str, type: str):
+def createToken(id: str, baseUrl: str, type: str):
     payload = {
+        'id': id,
         'baseUrl': baseUrl,
         'type': type,
         'exp': datetime.now(timezone.utc) + timedelta(hours=1)

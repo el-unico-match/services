@@ -19,6 +19,7 @@ class ApiService():
    id: str
    type: ApiServicesTypes
    key: str
+   apiKey: str
    baseUrl: str
    version: str
    created: datetime
