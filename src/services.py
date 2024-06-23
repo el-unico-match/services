@@ -4,6 +4,7 @@ from middlewares.DatabaseExceptionHandlerMiddleware import DatabaseExceptionHand
 from routers import selfServiceRouter
 from routers import externalServiceRouter
 from configs.settings import settings
+from repository.database import DatatabaseClient
 import logging
 
 logging.info(f"Starting application at {settings.INIT_TIME}")
@@ -14,6 +15,8 @@ app=FastAPI(
     summary='Manages services',
     docs_url='/api-docs'
 )
+
+DatatabaseClient.init()
 
 app.add_middleware(DatabaseExceptionHandlerMiddleware)
 app.add_middleware(RequestLoggerMiddleware)

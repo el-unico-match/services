@@ -22,5 +22,6 @@ class ApiService():
    baseUrl: str
    version: str
    created: datetime
+   updated: datetime
    availability: ApiServicesStatus
 

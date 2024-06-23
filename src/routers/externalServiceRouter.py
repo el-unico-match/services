@@ -16,7 +16,7 @@ from endpoints.patchService import PatchServiceRequest, PatchServiceResponse, pa
 router=APIRouter()
 
 @router.get(
-    path="/types",
+    path="/services/types",
     summary="Returns a list of types.",
     tags=["services types"], 
     status_code=status.HTTP_200_OK,
@@ -25,7 +25,7 @@ async def types():
     return await getTypes()
 
 @router.get(
-    path="/availabilities",
+    path="/services/availabilities",
     summary="Returns a list of status.",
     tags=["services types"],
     status_code=status.HTTP_200_OK,
@@ -110,7 +110,7 @@ async def delete(id: str, databaseClient = Depends(DatatabaseClient.get_services
     return await deleteService(id, databaseClient)
 
 @router.get(
-    path="/services/", 
+    path="/services", 
     summary="Returns a list of services.", 
     tags=["services"], 
     status_code=status.HTTP_200_OK)
