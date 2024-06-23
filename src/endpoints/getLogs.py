@@ -1,4 +1,6 @@
+from configs.settings import settings
+
 async def logFile():
-    with open('log', "r") as file:
+    with open(settings.LOG_FILEPATH, "r") as file:
         contents = file.read()
         return contents
