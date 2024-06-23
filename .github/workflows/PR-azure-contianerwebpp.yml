@@ -28,11 +28,6 @@ jobs:
       - name: Lowercase the repo name and username
         run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-      - name: Creates Notification Server config file
-        run |
-          echo "${{ secrets.NOTIFICATION_SERVERKEY_CONTENT }}" > "${{ vars.NOTIFICATION_SERVERKEY_FILENAME }}"
-          cat ${{ vars.NOTIFICATION_SERVERKEY_FILENAME }}
-
       - name: Create Environment File
         run: |
           echo "LOG_FILEPATH=${{ vars.LOG_FILEPATH }}" > .env
@@ -43,7 +38,6 @@ jobs:
           echo "jwt_public_key=${{ vars.JWT_PUBLIC_KEY }}" >> .env
           echo "jwt_algorithm=${{ vars.JWT_ALGORITHM }}" >> .env
           echo "db_url=${{ secrets.DB_URL }}" >> .env
-          echo "notification_server_key=${{ vars.NOTIFICATION_SERVERKEY_FILENAME }}" >> .env
 
       - name: List directory contents
         run: ls -al
