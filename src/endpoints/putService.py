@@ -2,6 +2,7 @@ from pydantic import Field, BaseModel
 from typing import Optional
 from repository.servicesMetadata import ApiService, ApiServicesStatus, ApiServicesTypes
 from repository.database import DatatabaseClient
+from common.WhiteListHelper import spreadWhiteList
 
 class putServiceRequest(BaseModel):
    id: str = Field()
@@ -23,5 +24,7 @@ async def putService(id: str, request: putServiceRequest, databaseClient: Datata
    apiService = ApiService(**result)
    await databaseClient.updateItem(apiService)
    
+   await spreadWhiteList(databaseClient)
+
    return apiService
     

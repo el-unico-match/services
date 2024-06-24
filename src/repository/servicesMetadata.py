@@ -3,10 +3,10 @@ from datetime import datetime
 from dataclasses import dataclass
 
 class ApiServicesTypes(str, Enum):
-    USERS = 'users',
-    PROFILES = 'profiles',
+    USER = 'user',
+    PROFILE = 'profile',
     GATEWAY = 'gateway',
-    SERVICES = 'services',
+    SERVICE = 'service',
     MATCH = 'match',
 
 class ApiServicesStatus(str, Enum):

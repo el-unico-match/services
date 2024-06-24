@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from repository.database import DatatabaseClient
 from exceptions.NotFoundException import NotFoundException
 from exceptions.ForbiddenException import ForbiddenException
+from common.WhiteListHelper import spreadWhiteList
 
 @dataclass
 class PatchServiceRequest(BaseModel):
@@ -48,6 +49,8 @@ async def patchService(id: str, apiKey: str | None, userToken: str | None, baseU
    apiService.availability = request.availability
    apiService.updated=datetime.now(timezone.utc)
    await databaseClient.updateItem(apiService)
+
+   await spreadWhiteList(databaseClient)
 
    response = PatchServiceResponse(
       id = apiService.id,

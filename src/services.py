@@ -1,6 +1,6 @@
 import logging
 from configs.settings import settings
-logging.basicConfig(filename=settings.LOG_FILEPATH, level=settings.LOG_LEVEL, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename=settings.LOG_FILEPATH, level=settings.LOG_LEVEL, format='%(asctime)s - %(levelname)s - %(message)s')
 
 from fastapi import FastAPI
 from middlewares.RequestLogger import RequestLoggerMiddleware
