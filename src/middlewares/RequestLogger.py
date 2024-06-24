@@ -5,9 +5,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import Response
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 
-logging.basicConfig(filename='log',level=10)
 logger=logging.getLogger(__name__)
-
 class RequestLoggerMiddleware(BaseHTTPMiddleware):
     
     async def logRequest(self, request: Request, requestId: uuid):

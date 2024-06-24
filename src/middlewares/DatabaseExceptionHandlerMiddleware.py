@@ -7,7 +7,6 @@ from exceptions.NotFoundException import NotFoundException
 from exceptions.ForbiddenException import ForbiddenException
 from exceptions.ValidationException import ValidationException
 
-logging.basicConfig(filename='log',level=10)
 logger=logging.getLogger(__name__)
 
 class DatabaseExceptionHandlerMiddleware(BaseHTTPMiddleware):
