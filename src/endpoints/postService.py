@@ -6,6 +6,7 @@ from repository.servicesMetadata import ApiService, ApiServicesStatus, ApiServic
 from dataclasses import dataclass
 from common.JwtHelper import createToken
 from repository.database import DatatabaseClient
+from common.WhiteListHelper import spreadWhiteList
 
 @dataclass
 class PostServiceRequest(BaseModel):
@@ -45,6 +46,8 @@ async def postService(request: PostServiceRequest, databaseClient: DatatabaseCli
    apiService=ApiService(**data)
    await databaseClient.persistItem(apiService)
    
+   await spreadWhiteList(databaseClient)
+
    response=PostServiceResponse(
       id=apiService.id,
       type=apiService.type.value,

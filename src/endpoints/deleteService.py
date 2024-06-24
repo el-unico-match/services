@@ -1,5 +1,8 @@
 
 from repository.database import DatatabaseClient
+from common.WhiteListHelper import spreadWhiteList
 
 async def deleteService(id: str, databaseClient: DatatabaseClient) -> str:
-    return await databaseClient.deleteItem(id)
+    result = await databaseClient.deleteItem(id)
+    await spreadWhiteList(databaseClient)
+    return result;

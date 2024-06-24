@@ -60,14 +60,10 @@ class DatatabaseClient:
     return result
 
   async def filterItems(self, filter: any) -> Any: 
-    result=self.database.filter(filter=filter)
+    result=self.database.find(filter=filter, projection={'_id': False})
+    data =list(result)
 
-    if ( result == None):
-      raise NotFoundException('No se encontró el elemento')
-
-    del result['_id']
-
-    return result
+    return data
 
   async def filterItem(self, filter: any) -> Any: 
     result=self.database.find_one(filter=filter)

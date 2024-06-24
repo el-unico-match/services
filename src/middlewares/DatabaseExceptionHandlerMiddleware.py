@@ -19,25 +19,25 @@ class DatabaseExceptionHandlerMiddleware(BaseHTTPMiddleware):
 
         except ForbiddenException as e403:
             exceptionJson = jsonable_encoder(e403)
-            logger.error(exceptionJson)
+            logger.error(exceptionJson, str(e403), exc_info=True)
 
             return Response(content='No tiene permisos para realizar la acción.', status_code=403)
 
         except NotFoundException as e404:
             exceptionJson = jsonable_encoder(e404)
-            logger.error(exceptionJson)
+            logger.error(exceptionJson, str(e404), exc_info=True)
 
             return Response(content='No se encontró el elemento', status_code=404)
 
         except ValidationException as e422:
             exceptionJson = jsonable_encoder(e422)
-            logger.error(exceptionJson)
+            logger.error(exceptionJson, str(e422), exc_info=True)
 
             return Response(content=e422.message, status_code=422)
         
         except Exception as e500:
             exceptionJson = jsonable_encoder(e500)
-            logger.error(exceptionJson)
+            logger.error(exceptionJson, str(e500), exc_info=True)
 
             return Response(content='Lo sentimos, algo falló', status_code=500)
 
