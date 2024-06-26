@@ -12,6 +12,7 @@ from endpoints.getServices import getServices
 from endpoints.getTypes import getTypes
 from endpoints.getAvailabilities import getAvailabilities
 from endpoints.patchService import PatchServiceRequest, PatchServiceResponse, patchService
+from endpoints.getServiceStatus import getServiceStatus
 
 router=APIRouter()
 
@@ -96,6 +97,18 @@ async def get(id: str, databaseClient = Depends(DatatabaseClient.get_services_in
     - **id**: id of an existent service
     """
     return await getService(id, databaseClient)
+
+
+@router.get(
+    path="/services/{id}/status",
+    summary="Fetch an existing service status.",
+    tags=["services"]
+)
+async def get(id: str, databaseClient = Depends(DatatabaseClient.get_services_instance)):
+    """
+    - **id**: id of an existent service
+    """
+    return await getServiceStatus(id, databaseClient)
 
 @router.delete(
     path="/services/{id}",
