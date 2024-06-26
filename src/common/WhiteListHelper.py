@@ -31,6 +31,6 @@ async def spreadWhiteList(databaseClient: DatatabaseClient):
                 except Exception:
                     logger.error(f"Error while sending whitelist", exc_info=True)    
 
-    except Exception as exception:
-        logger.error(f"Error while creationg whitelist", str(exception), exc_info=True)
+    except Exception:
+        logger.error(f"Error while creationg whitelist", exc_info=True)
 
