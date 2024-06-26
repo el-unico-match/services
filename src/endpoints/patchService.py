@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime, timezone
 from pydantic import BaseModel, Field
 from repository.servicesMetadata import ApiService, ApiServicesStatus
@@ -50,7 +51,7 @@ async def patchService(id: str, apiKey: str | None, userToken: str | None, baseU
    apiService.updated=datetime.now(timezone.utc)
    await databaseClient.updateItem(apiService)
 
-   await spreadWhiteList(databaseClient)
+   asyncio.create_task(spreadWhiteList(databaseClient))
 
    response = PatchServiceResponse(
       id = apiService.id,

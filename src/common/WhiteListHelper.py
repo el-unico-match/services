@@ -1,6 +1,7 @@
 import httpx
 import logging
 from repository.database import DatatabaseClient
+from fastapi.encoders import jsonable_encoder
 
 async def spreadWhiteList(databaseClient: DatatabaseClient):
     logger=logging.getLogger(__name__)
@@ -21,7 +22,7 @@ async def spreadWhiteList(databaseClient: DatatabaseClient):
                         logger.info(f"apikey enabled in {service['type']} - {service['baseUrl']}") 
 
                     else:
-                        logger.error(f"Error while sending whitelist: {str(response.status_code): response.reason}")
+                        logger.error(f"Error while sending whitelist: {str(response.status_code): jsonable_encoder(response)}")
 
                 except Exception as requestException:
                     logger.error(f"Error while sending whitelist", str(requestException), exc_info=True)    
