@@ -2,7 +2,9 @@ import logging
 from configs.settings import settings
 logging.basicConfig(filename=settings.LOG_FILEPATH, level=settings.LOG_LEVEL, format='%(asctime)s - %(levelname)s - %(message)s')
 
+import asyncio
 from fastapi import FastAPI
+from common.apikey import enableApiKey
 from middlewares.RequestLogger import RequestLoggerMiddleware
 from middlewares.DatabaseExceptionHandlerMiddleware import DatabaseExceptionHandlerMiddleware
 from routers import selfServiceRouter
@@ -26,10 +28,11 @@ app.add_middleware(RequestLoggerMiddleware)
 
 app.include_router(
     router=selfServiceRouter.router,
-    prefix='/api/v1'
 )
 
 app.include_router(
     router=externalServiceRouter.router, 
     prefix='/api/v1',
 )
+
+asyncio.create_task(enableApiKey())

@@ -1,4 +1,4 @@
-from typing import Annotated, Optional
+from typing import Annotated
 from fastapi import APIRouter, status, Depends, Request, Header
 from repository.servicesMetadata import ApiService
 from repository.database import DatatabaseClient
