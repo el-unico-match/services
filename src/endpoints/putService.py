@@ -1,3 +1,4 @@
+import asyncio
 from pydantic import Field, BaseModel
 from typing import Optional
 from repository.servicesMetadata import ApiService, ApiServicesStatus, ApiServicesTypes
@@ -24,7 +25,7 @@ async def putService(id: str, request: putServiceRequest, databaseClient: Datata
    apiService = ApiService(**result)
    await databaseClient.updateItem(apiService)
    
-   await spreadWhiteList(databaseClient)
+   asyncio.create_task(spreadWhiteList(databaseClient))
 
    return apiService
     

@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime, timezone
 from typing import Optional
 from bson import ObjectId
@@ -46,7 +47,7 @@ async def postService(request: PostServiceRequest, databaseClient: DatatabaseCli
    apiService=ApiService(**data)
    await databaseClient.persistItem(apiService)
    
-   await spreadWhiteList(databaseClient)
+   asyncio.create_task(spreadWhiteList(databaseClient))
 
    response=PostServiceResponse(
       id=apiService.id,

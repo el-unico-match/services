@@ -1,3 +1,4 @@
+from typing import List
 import pytz
 from datetime import datetime
 from pydantic_settings import BaseSettings,SettingsConfigDict
@@ -20,7 +21,12 @@ class SettingsLoader(BaseSettings):
     db_domain:str='localhost'
     db_port:int=5003
     db_name:str='dbname'
-    
+
+    apikey_value:str=''
+    apikey_status:str=''
+    apikey_activate_endpoint:str=''
+    apikey_whitelist:List[str]=[]
+
     db_url:str=''
     model_config = SettingsConfigDict(env_file=('../dev.env','.env'))
 
