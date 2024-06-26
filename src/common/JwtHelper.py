@@ -7,7 +7,7 @@ def createToken(id: str, baseUrl: str, type: str):
         'id': id,
         'baseUrl': baseUrl,
         'type': type,
-        'exp': datetime.now(timezone.utc) + timedelta(hours=1)
+        'exp': datetime.now(timezone.utc) + timedelta(days=90)
     }
 
     secret_key = settings.jwt_private_key

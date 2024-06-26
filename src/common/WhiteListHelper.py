@@ -8,12 +8,14 @@ async def spreadWhiteList(databaseClient: DatatabaseClient):
     logger=logging.getLogger(__name__)
 
     try:
-        enabledServices = await databaseClient.filterItems({'availability': 'enabled'})
+        allRegisteredServices = await databaseClient.filterItems({})
+        enabledServices = list(filter(lambda x: x['availability'] == 'enabled', allRegisteredServices))
+
         data={
             'apiKeys': list([item['apiKey'] for item in enabledServices])
         }
     
-        for service in enabledServices:
+        for service in allRegisteredServices:
             url = f"{service['baseUrl']}/whitelist"
             headers={"x-apikey": settings.apikey_value }
             async with httpx.AsyncClient() as client:

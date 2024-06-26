@@ -36,11 +36,7 @@ async def patchService(id: str, apiKey: str | None, userToken: str | None, baseU
    data = await databaseClient.retrieveItem(id)
 
    try:
-      key = extractKey(apiKey)
-
-      # token should be validated here, only filtering by admin users
-
-      if ( data['key'] != key): # or (userToken != None  or (baseUrl != None and data['baseUrl'] != baseUrl)) ):
+      if ( data['apiKey'] != apiKey):
          raise ForbiddenException('Invalid ApiKey, token or baseUrl')  
 
    except:
