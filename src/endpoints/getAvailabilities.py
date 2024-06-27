@@ -5,7 +5,7 @@ async def getAvailabilities():
     for member in ApiServicesStatus:
         properties.append({   
             'name': member.name, 
-            'number': member.value
+            'value': member.value
         });
     
     return properties

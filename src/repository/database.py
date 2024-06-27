@@ -93,8 +93,8 @@ class DatatabaseClient:
     
     return result
 
-  async def listItems(self) -> id:
-    result=self.database.find(filter={}, projection={'_id': False})
+  async def listItems(self, filter={}) -> id:
+    result=self.database.find(filter=filter, projection={'_id': False})
     data =list(result)
 
     return data

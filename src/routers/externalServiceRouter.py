@@ -1,6 +1,6 @@
-from typing import Annotated
+from typing import Annotated, Union
 from fastapi import APIRouter, status, Depends, Request, Header
-from repository.servicesMetadata import ApiService
+from repository.servicesMetadata import ApiService, ApiServicesStatus, ApiServicesTypes
 from repository.database import DatatabaseClient
 from exceptions.ValidationException import ValidationException
 
@@ -127,5 +127,10 @@ async def delete(id: str, databaseClient = Depends(DatatabaseClient.get_services
     summary="Returns a list of services.", 
     tags=["services"], 
     status_code=status.HTTP_200_OK)
-async def list(databaseClient = Depends(DatatabaseClient.get_services_instance)):
-    return await getServices(databaseClient)
+async def list(
+    id: Union[str, None] = None,
+    baseUrl: Union[str, None] = None,
+    type: Union[str,None] = None,
+    apiKeyState: Union[str, None] = None,
+    databaseClient = Depends(DatatabaseClient.get_services_instance)):
+    return await getServices(id, baseUrl, type, apiKeyState, databaseClient)
